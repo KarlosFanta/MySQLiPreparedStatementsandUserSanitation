@@ -17,7 +17,7 @@
  -->
 Inserting from a _POST requires 2 files. one for inputting: and another for capturing the data.
 <br>
-Here we can later add different types of inputs such as buttons, dropdowns, radio buttons etc.<br>
+Here we can later add different types of inputs such as buttons, dropdowns, radio buttons, HTML5 validation etc.<br>
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <form action="webform2.php" method="post">
 <table>
@@ -30,12 +30,12 @@ echo "<th>Payment Method</th>";
 echo "</tr>\n";
 ?>
                 <tr>
-                        <th><input type="text" size="2"  id="TransNo"  name="TransNo" value="" />
+                        <th><input type="text" size="2"  id="TransNo"  name="TransNo" value="" required />
                 </th>
-                        <th><input type="text" size="2"  id="CustNo"  name="CustNo" value="" />
+                        <th><input type="text" size="2"  id="CustNo"  name="CustNo" value="" required  />
                 </th>
                 <th>   
-                        <input  id="TransDate" size="10" name="TransDate"  value=""  >
+                        <input  id="TransDate" size="10" name="TransDate"  value="" required  >
                 </th>
                 <th>
                         <input type="text"  size="5" id="AmtPaid"  name="AmtPaid" value="" />
