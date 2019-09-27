@@ -7,11 +7,7 @@
   `AmtPaid` float DEFAULT NULL,
   `Notes` varchar(500) DEFAULT NULL,
   `TMethod` varchar(30) DEFAULT NULL,
-  `InvNoA` varchar(50) DEFAULT NULL,
-  `InvNoAincl` float DEFAULT NULL,
-  `InvNoB` varchar(11) DEFAULT NULL,
-  `InvNoBincl` float DEFAULT NULL,
-  PRIMARY KEY (`TransNo`),
+   PRIMARY KEY (`TransNo`),
   UNIQUE KEY `TransNo` (`TransNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  -->
