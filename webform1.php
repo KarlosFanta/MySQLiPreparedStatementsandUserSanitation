@@ -1,3 +1,20 @@
+<!-- Table structure:  NB I Have to add primary key!
+ 
+        CREATE TABLE `transactions` (
+  `TransNo` int(11) NOT NULL,
+  `CustNo` int(11) DEFAULT NULL,
+  `TransDate` date NOT NULL DEFAULT '0000-00-00',
+  `AmtPaid` float DEFAULT NULL,
+  `Notes` varchar(500) DEFAULT NULL,
+  `TMethod` varchar(30) DEFAULT NULL,
+  `InvNoA` varchar(50) DEFAULT NULL,
+  `InvNoAincl` float DEFAULT NULL,
+  `InvNoB` varchar(11) DEFAULT NULL,
+  `InvNoBincl` float DEFAULT NULL,
+   PRIMARY KEY (`TransNo`),
+  UNIQUE KEY `TransNo` (`TransNo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ -->
 Inserting from a _POST requires 2 files. one for inputting: and another for capturing the data.
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <form action="webform2.php" method="post">
@@ -37,21 +54,5 @@ echo "</tr>\n";
                 </table>
  
  
-<!-- Table structure:  NB I Have to add primary key!
- 
-        CREATE TABLE `transactions` (
-  `TransNo` int(11) NOT NULL,
-  `CustNo` int(11) DEFAULT NULL,
-  `TransDate` date NOT NULL DEFAULT '0000-00-00',
-  `AmtPaid` float DEFAULT NULL,
-  `Notes` varchar(500) DEFAULT NULL,
-  `TMethod` varchar(30) DEFAULT NULL,
-  `InvNoA` varchar(50) DEFAULT NULL,
-  `InvNoAincl` float DEFAULT NULL,
-  `InvNoB` varchar(11) DEFAULT NULL,
-  `InvNoBincl` float DEFAULT NULL,
-   PRIMARY KEY (`TransNo`),
-  UNIQUE KEY `TransNo` (`TransNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
- 
+
 
