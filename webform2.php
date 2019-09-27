@@ -15,8 +15,10 @@ $Notes ='';
 $CustFN ="";
 $CustEmail = "";
 
- 
-$link = mysqli_connect("localhost", "my_user", "my_password", "myDBname");
+
+
+$link = mysqli_connect("localhost", "root", "Itsmeagain007#", "kc");
+//$link = mysqli_connect("localhost", "my_user", "my_password", "myDBname");
 // for example: $link = mysqli_connect("mywebsite.com", "root", "#$*12UeGD*Qdf", "myDBname");
  
 /* check connection */
@@ -47,6 +49,17 @@ $Notes = str_replace('"', '&quot;', $Notes);  //for mailto: emails.
 $Notes = htmlentities( $Notes, ENT_SUBSTITUTE );
   //and also header: charset=UTF-8"   WORKS LIKE A CHARM 2014
 $Notes = mysqli_real_escape_string($link, $Notes);
+
+
+echo "<br><br>TransNo: ".$TransNo."<br>";
+echo "CustNo: ".$CustNo."<br>";
+echo "TransDate: ".$TransDate."<br>";
+echo "AmtPaid: ".$AmtPaid."<br>";
+echo "Notes: ".$Notes."<br>";
+echo "CustFN: ".$CustFN."<br>";
+echo "CustEmail: ".$CustEmail."<br>";
+
+
   
 $TransNoInt = intval($TransNo);
 $query="insert into transactions2 (TransNo, CustNo, TransDate, AmtPaid, Notes)
@@ -57,13 +70,13 @@ echo '<br>';
 if ($stmt = mysqli_prepare($link, $query)) {
 
     /* bind parameters for markers */
-    mysqli_stmt_bind_param($stmt, "sssss", transactions2); //untested
+ mysqli_stmt_bind_param($stmt, "sssss", transactions2); //untested
 
     /* execute query */
     mysqli_stmt_execute($stmt);
 
     /* bind result variables */
-    mysqli_stmt_bind_result($stmt, $TransNo,  $CustNo, '$TransDate', $AmtPaid, '$Notes');
+  //mysqli_stmt_bind_result($stmt, $TransNo,  $CustNo, '$TransDate', $AmtPaid, '$Notes');
 
     /* fetch value */
     mysqli_stmt_fetch($stmt);
@@ -79,6 +92,6 @@ if ($stmt = mysqli_prepare($link, $query)) {
 //mysqli_query($link, $query);
 echo "<font size = 4 color = red>".mysqli_error($link)."</font>";
 if (mysqli_affected_rows($link) == -1)
-echo "<font size = 5  color = red><b><b>insert into transactions NOT successful!</b></font><br>$query<br>";
+echo "<font size = 5  color = red><b><b>insert into transactions2 NOT successful!</b></font><br>$query<br>";
 else
 echo "<font size = 4>insert success! </font><br>";
