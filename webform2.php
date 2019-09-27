@@ -12,8 +12,8 @@ $CustNo = '';
 $TransDate = '';
 $AmtPaid = '';
 $Notes ='';
-$CustFN ="";
-$CustEmail = "";
+$CustFN ="John";
+$CustEmail = "test@test.com";
 
 
 
@@ -41,7 +41,7 @@ $TransDate = $_POST['TransDate'];
 $D1 = $TransDate;
 $D2 = explode("/", $D1);
 $TransDate = $D2[2]."-".$D2[1]."-".$D2[0];
-echo $TransDate;         
+//echo $TransDate;         
 $charset = mysqli_character_set_name($link);//check for UTF-8
 $AmtPaid = $_POST['AmtPaid'];
 $Notes = $_POST['Notes'];
@@ -54,7 +54,7 @@ $Notes = mysqli_real_escape_string($link, $Notes);
 echo "<br><br>TransNo: ".$TransNo."<br>";
 echo "CustNo: ".$CustNo."<br>";
 echo "TransDate: ".$TransDate."<br>";
-echo "AmtPaid: ".$AmtPaid."<br>";
+echo "AmtPaid: $".$AmtPaid."<br>";
 echo "Notes: ".$Notes."<br>";
 echo "CustFN: ".$CustFN."<br>";
 echo "CustEmail: ".$CustEmail."<br>";
@@ -64,34 +64,43 @@ echo "CustEmail: ".$CustEmail."<br>";
 $TransNoInt = intval($TransNo);
 $query="insert into transactions2 (TransNo, CustNo, TransDate, AmtPaid, Notes)
 VALUES ( ?,  ?, '?', ?, '?') ";
+$query="insert into transactions2 (TransNo, CustNo, TransDate, AmtPaid, Notes)
+VALUES ( ?,  ?, ?, ?, ?) ";
 
 echo '<br>';
 
 if ($stmt = mysqli_prepare($link, $query)) {
 
     /* bind parameters for markers */
- mysqli_stmt_bind_param($stmt, "sssss", transactions2); //untested
-
+ mysqli_stmt_bind_param($stmt, "iisds", $TransNoInt,  $CustNo, $TransDate, $AmtPaid, $Notes); //untested
+//iisds possibly stands for: integer integer string decimal string
+/* `TransNo` int(11) NOT NULL,
+  `CustNo` int(11) DEFAULT NULL,
+  `TransDate` date NOT NULL,
+  `AmtPaid` float DEFAULT NULL,
+  `Notes` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`TransNo`),
+  UNIQUE KEY `TransNo` (`TransNo`)
+*/
     /* execute query */
     mysqli_stmt_execute($stmt);
+printf("%d Row inserted.\n", mysqli_stmt_affected_rows($stmt));
 
     /* bind result variables */
-  //mysqli_stmt_bind_result($stmt, $TransNo,  $CustNo, '$TransDate', $AmtPaid, '$Notes');
+// mysqli_stmt_bind_result($stmt, $TransNoInt,  $CustNo, '$TransDate', $AmtPaid, '$Notes');
+///mysqli_stmt_bind_result($stmt);  only for select statement presuamably?
 
     /* fetch value */
     mysqli_stmt_fetch($stmt);
 
-    //printf("%s is in district %s\n", $city, $district);
-
+  
     /* close statement */
     mysqli_stmt_close($stmt);
 }
 
 
-
-//mysqli_query($link, $query);
 echo "<font size = 4 color = red>".mysqli_error($link)."</font>";
 if (mysqli_affected_rows($link) == -1)
-echo "<font size = 5  color = red><b><b>insert into transactions2 NOT successful!</b></font><br>$query<br>";
+echo "<font size = 4  color = red><b><b>insert into transactions2 NOT successful!</b></font><br>$query<br>";
 else
 echo "<font size = 4>insert success! </font><br>";
