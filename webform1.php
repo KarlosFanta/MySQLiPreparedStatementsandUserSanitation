@@ -16,6 +16,8 @@
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  -->
 Inserting from a _POST requires 2 files. one for inputting: and another for capturing the data.
+<br>
+Here we can later add different types of inputs such as buttons, dropdowns, radio buttons etc.<br>
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <form action="webform2.php" method="post">
 <table>
