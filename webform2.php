@@ -1,35 +1,20 @@
-Also add the PHP isset function, and also find out about sanitation:
+Also add the PHP isset function, and also find out about sanitation:<br>
 http://code.tutsplus.com/tutorials/sanitize-and-validate-data-with-php-filters--net-2595
- 
-THIS is the receiving file: webform2.php: 
- 
+ <br><br>
+THIS is the receiving file: webform2.php: <br>
+<br>
+NB The procedural version of mysqli is being used below
  
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php
-$Trans_No = 0;
+$TransNo = 0;
 $CustNo = '';
 $TransDate = '';
 $AmtPaid = '';
 $Notes ='';
-$TMethod = '';
-$InvNoA = '';
-$InvNoAincl = '';
-$InvNoB = '';
-$InvNoBincl = '';
-$ProofNo = '';
 $CustFN ="";
-$CustLN ="";
 $CustEmail = "";
- 
- 
-$TMethod = $_POST['TMethod'];
-$InvNoA = $_POST['InvNoA'];
-$InvNoAincl = $_POST['InvNoAincl'];
-$InvNoB = @$_POST['InvNoB'];
-$InvNoBincl = @$_POST['InvNoBincl'];
-$Trans_No = $_POST['TransNo'];
-$CustNo = $_POST['CustNo'];
-$TransDate = $_POST['TransDate'];
+
  
 $link = mysqli_connect("localhost", "my_user", "my_password", "myDBname");
 // for example: $link = mysqli_connect("mywebsite.com", "root", "#$*12UeGD*Qdf", "myDBname");
@@ -48,7 +33,9 @@ echo "";
 }
  
  
- 
+$TransNo = $_POST['TransNo'];
+$CustNo = $_POST['CustNo'];
+$TransDate = $_POST['TransDate'];
 $D1 = $TransDate;
 $D2 = explode("/", $D1);
 $TransDate = $D2[2]."-".$D2[1]."-".$D2[0];
@@ -60,16 +47,36 @@ $Notes = str_replace('"', '&quot;', $Notes);  //for mailto: emails.
 $Notes = htmlentities( $Notes, ENT_SUBSTITUTE );
   //and also header: charset=UTF-8"   WORKS LIKE A CHARM 2014
 $Notes = mysqli_real_escape_string($link, $Notes);
- 
- 
-$Trans_NoInt = intval($Trans_No);
-$query="insert into transactions (TransNo, CustNo, TransDate, AmtPaid, Notes, TMethod,  
-InvNoA, InvNoAincl, InvNoB, InvNoBincl)
-VALUES
-( $Trans_No,  $CustNo, '$TransDate', $AmtPaid, '$Notes', '$TMethod',
-'$InvNoA', '$InvNoAincl' ,  '$InvNoB', '$InvNoBincl' ) ";
-echo '</br>';
-mysqli_query($link, $query);
+  
+$TransNoInt = intval($TransNo);
+$query="insert into transactions2 (TransNo, CustNo, TransDate, AmtPaid, Notes)
+VALUES ( ?,  ?, '?', ?, '?') ";
+
+echo '<br>';
+
+if ($stmt = mysqli_prepare($link, $query)) {
+
+    /* bind parameters for markers */
+    mysqli_stmt_bind_param($stmt, "sssss", transactions2); //untested
+
+    /* execute query */
+    mysqli_stmt_execute($stmt);
+
+    /* bind result variables */
+    mysqli_stmt_bind_result($stmt, $TransNo,  $CustNo, '$TransDate', $AmtPaid, '$Notes');
+
+    /* fetch value */
+    mysqli_stmt_fetch($stmt);
+
+    //printf("%s is in district %s\n", $city, $district);
+
+    /* close statement */
+    mysqli_stmt_close($stmt);
+}
+
+
+
+//mysqli_query($link, $query);
 echo "<font size = 4 color = red>".mysqli_error($link)."</font>";
 if (mysqli_affected_rows($link) == -1)
 echo "<font size = 5  color = red><b><b>insert into transactions NOT successful!</b></font><br>$query<br>";
