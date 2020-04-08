@@ -55,3 +55,4 @@ echo "</tr>\n";
                 </tr>
                 </table><br>
  <input type="submit"  size="5" value="submit" />
+</form>
